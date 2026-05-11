@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/ソリューション項目/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="PG3_00_01/PG3_00_01.vcxproj" Id="479712bc-265e-4fb1-9018-147f0156a6cd" />
+</Solution>
