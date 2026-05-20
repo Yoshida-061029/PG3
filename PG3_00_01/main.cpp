@@ -1,37 +1,41 @@
-#include <iostream>
+#include <stdio.h>
 #include <Windows.h>
-using namespace std;
 
+int RecursivePay(int hour) {
+	if (hour == 1) {
+		return 100;
+	}
 
-template <typename T>
-T Min(T a, T b) {
-    return (a < b) ? a : b;
-}
+	int prev = RecursivePay(hour - 1);
 
-
-template <>
-char Min(char a, char b) {
-    cout << "数字以外は代入できません" << endl;
-    return a;
+	return prev * 2 - 50;
 }
 
 int main() {
-    SetConsoleOutputCP(65001);
 
+	system("chcp 65001 > nul");
 
-    int i1 = 10, i2 = 20;
-    cout << "int: Min(" << i1 << ", " << i2 << ") = " << Min(i1, i2) << endl;
+	int hours = 10;
+	int normalPay = 1072 * hours;
+	int totalRecursive = 0;
 
+	for (int i = 1; i <= hours; i++) {
 
-    float f1 = 3.14f, f2 = 2.71f;
-    cout << "float: Min(" << f1 << ", " << f2 << ") = " << Min(f1, f2) << endl;
+		int pay = RecursivePay(i);
 
-    double d1 = 1.234, d2 = 5.678;
-    cout << "double: Min(" << d1 << ", " << d2 << ") = " << Min(d1, d2) << endl;
+		totalRecursive += pay;
 
+		printf("%d時間目 : %d円\n", i, pay);
+	}
+	printf("\n通常賃金 : %d円\n", normalPay);
+	printf("再帰的賃金 : %d円\n", totalRecursive);
 
-    char c1 = 'A', c2 = 'B';
-    Min(c1, c2);
+	if (totalRecursive > normalPay) {
+		printf("再帰的賃金のほうが高い\n");
+	}
+	else {
+		printf("通常賃金のほうが高い\n");
+	}
 
-    return 0;
+	return 0;
 }
