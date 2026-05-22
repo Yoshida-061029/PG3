@@ -1,41 +1,36 @@
-#include <stdio.h>
-#include <Windows.h>
+#include<stdio.h>
+#include<Windows.h>
 
-int RecursivePay(int hour) {
-	if (hour == 1) {
-		return 100;
-	}
-
-	int prev = RecursivePay(hour - 1);
-
-	return prev * 2 - 50;
+int RecursiveWage(int a) {
+    if (a == 1) {
+        return 100;
+    }
+    return RecursiveWage(a - 1) * 2 - 50;
 }
 
 int main() {
+    SetConsoleOutputCP(65001);
 
-	system("chcp 65001 > nul");
+    int normalWage = 1072;
 
-	int hours = 10;
-	int normalPay = 1072 * hours;
-	int totalRecursive = 0;
+    printf(" 時間  | 一般賃金 | 再帰賃金\n");
+    printf(" ----- |----------|----------\n");
 
-	for (int i = 1; i <= hours; i++) {
+    for (int h = 1; h <= 10; h++) {
+        int recursiveWage = RecursiveWage(h);
+        printf("%3d時間 |%6d円 |%6d円\n", h, normalWage, recursiveWage);
+    }
 
-		int pay = RecursivePay(i);
+    int lastRecursiveWage = RecursiveWage(10);
+    if (normalWage > lastRecursiveWage) {
+        printf("一般賃金の方が高い\n");
+    }
+    else if (lastRecursiveWage > normalWage) {
+        printf("再帰賃金の方が高い\n");
+    }
+    else {
+        printf("同じ\n");
+    }
 
-		totalRecursive += pay;
-
-		printf("%d時間目 : %d円\n", i, pay);
-	}
-	printf("\n通常賃金 : %d円\n", normalPay);
-	printf("再帰的賃金 : %d円\n", totalRecursive);
-
-	if (totalRecursive > normalPay) {
-		printf("再帰的賃金のほうが高い\n");
-	}
-	else {
-		printf("通常賃金のほうが高い\n");
-	}
-
-	return 0;
+    return 0;
 }
