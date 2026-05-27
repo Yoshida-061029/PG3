@@ -1,36 +1,61 @@
-#include<stdio.h>
-#include<Windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <windows.h>
 
-int RecursiveWage(int a) {
-    if (a == 1) {
-        return 100;
-    }
-    return RecursiveWage(a - 1) * 2 - 50;
-}
 
-int main() {
-    SetConsoleOutputCP(65001);
+typedef void (*ResultCallback)(int dice, int user_choice);
 
-    int normalWage = 1072;
 
-    printf(" 時間  | 一般賃金 | 再帰賃金\n");
-    printf(" ----- |----------|----------\n");
+void judge_result(int dice, int user_choice) {
+    int is_odd = dice % 2; 
 
-    for (int h = 1; h <= 10; h++) {
-        int recursiveWage = RecursiveWage(h);
-        printf("%3d時間 |%6d円 |%6d円\n", h, normalWage, recursiveWage);
-    }
+    printf("\n--- 結果発表 ---\n");
+    printf("サイコロの目: %d (%s)\n", dice, is_odd ? "半（奇数）" : "丁（偶数）");
 
-    int lastRecursiveWage = RecursiveWage(10);
-    if (normalWage > lastRecursiveWage) {
-        printf("一般賃金の方が高い\n");
-    }
-    else if (lastRecursiveWage > normalWage) {
-        printf("再帰賃金の方が高い\n");
+    if (is_odd == user_choice) {
+        printf("正解！\n");
     }
     else {
-        printf("同じ\n");
+        printf("不正解...\n");
     }
+}
+
+
+void reveal_after_delay(int dice, int user_choice, ResultCallback callback) {
+    printf("結果を確認中");
+    for (int i = 0; i < 3; i++) {
+        Sleep(1000);
+        printf(".");
+        fflush(stdout);
+    }
+    printf("\n");
+    callback(dice, user_choice);
+}
+
+int main(void) {
+    SetConsoleOutputCP(65001);
+
+    srand((unsigned int)time(NULL));
+
+    int dice = (rand() % 6) + 1;
+
+    printf("=== 丁半ゲーム ===\n");
+    printf("サイコロを振りました！\n");
+    printf("丁（偶数）か半（奇数）か当ててください。\n");
+    printf("  1: 半（奇数）\n");
+    printf("  0: 丁（偶数）\n");
+    printf("あなたの予想: ");
+
+    int user_choice;
+    scanf_s("%d", &user_choice);
+
+    if (user_choice != 0 && user_choice != 1) {
+        printf("無効な入力です。0か1を入力してください。\n");
+        return 1;
+    }
+
+    reveal_after_delay(dice, user_choice, judge_result);
 
     return 0;
 }
