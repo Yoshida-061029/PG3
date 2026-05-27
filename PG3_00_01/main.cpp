@@ -11,21 +11,23 @@ int RecursiveWage(int a) {
 int main() {
     SetConsoleOutputCP(65001);
 
-    int normalWage = 1072;
+    int baseWage = 1072;
 
     printf(" 時間  | 一般賃金 | 再帰賃金\n");
     printf(" ----- |----------|----------\n");
 
     for (int h = 1; h <= 10; h++) {
+        int normalWage = baseWage + (h - 1) * 100;  
         int recursiveWage = RecursiveWage(h);
         printf("%3d時間 |%6d円 |%6d円\n", h, normalWage, recursiveWage);
     }
 
+    int lastNormalWage = baseWage + (10 - 1) * 100;
     int lastRecursiveWage = RecursiveWage(10);
-    if (normalWage > lastRecursiveWage) {
+    if (lastNormalWage > lastRecursiveWage) {
         printf("一般賃金の方が高い\n");
     }
-    else if (lastRecursiveWage > normalWage) {
+    else if (lastRecursiveWage > lastNormalWage) {
         printf("再帰賃金の方が高い\n");
     }
     else {
