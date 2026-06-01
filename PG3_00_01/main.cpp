@@ -3,24 +3,21 @@
 #include <time.h>
 #include <windows.h>
 
-
 typedef void (*ResultCallback)(int dice, int user_choice);
 
-
 void judge_result(int dice, int user_choice) {
-    int is_odd = dice % 2; 
+    int is_odd = dice % 2;  
 
     printf("\n--- 結果発表 ---\n");
     printf("サイコロの目: %d (%s)\n", dice, is_odd ? "半（奇数）" : "丁（偶数）");
 
     if (is_odd == user_choice) {
-        printf("正解！\n");
+        printf("おめでとう！正解です！\n");
     }
     else {
-        printf("不正解...\n");
+        printf("残念...不正解です。\n");
     }
 }
-
 
 void reveal_after_delay(int dice, int user_choice, ResultCallback callback) {
     printf("結果を確認中");
@@ -30,18 +27,17 @@ void reveal_after_delay(int dice, int user_choice, ResultCallback callback) {
         fflush(stdout);
     }
     printf("\n");
-    callback(dice, user_choice);
+    callback(dice, user_choice); 
 }
 
 int main(void) {
     SetConsoleOutputCP(65001);
 
     srand((unsigned int)time(NULL));
-
     int dice = (rand() % 6) + 1;
 
     printf("=== 丁半ゲーム ===\n");
-    printf("サイコロを振りました！\n");
+    printf("サイコロを振りました！\n\n");
     printf("丁（偶数）か半（奇数）か当ててください。\n");
     printf("  1: 半（奇数）\n");
     printf("  0: 丁（偶数）\n");
@@ -55,6 +51,7 @@ int main(void) {
         return 1;
     }
 
+   
     reveal_after_delay(dice, user_choice, judge_result);
 
     return 0;
