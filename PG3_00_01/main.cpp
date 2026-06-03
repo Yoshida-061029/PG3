@@ -1,43 +1,64 @@
 #include <iostream>
-#include <Windows.h>
-using namespace std;
+#include <thread>
+#include <chrono>
+#include <cstdlib>
+#include <ctime>
+#include <functional>
+#include <windows.h>
 
-template <typename T>
-T Min(T a, T b) {
-    return (a < b) ? a : b;
-}
 
-template <>
-char Min(char a, char b) {
-    cout << "数字以外は代入できません" << endl;
-    return '\0'; 
+void setTimeout(int seconds, std::function<void()> callback) {
+    std::this_thread::sleep_for(std::chrono::seconds(seconds));
+    callback();
 }
 
 int main() {
-    SetConsoleOutputCP(65001);
+    SetConsoleOutputCP(65001); 
 
-    int i1 = 10, i2 = 20;
-    cout << "int: Min(" << i1 << ", " << i2 << ") = " << Min(i1, i2) << endl;
-    int i3 = 5, i4 = 3;
-    cout << "int: Min(" << i3 << ", " << i4 << ") = " << Min(i3, i4) << endl;
+    srand(static_cast<unsigned int>(time(nullptr)));
 
-    float f1 = 3.14f, f2 = 2.71f;
-    cout << "float: Min(" << f1 << ", " << f2 << ") = " << Min(f1, f2) << endl;
-    float f3 = 1.11f, f4 = 9.99f;
-    cout << "float: Min(" << f3 << ", " << f4 << ") = " << Min(f3, f4) << endl;
+    std::cout << "===== 丁半ゲーム =====" << std::endl;
+    std::cout << "サイコロを振ります！" << std::endl;
 
-    double d1 = 1.234, d2 = 5.678;
-    cout << "double: Min(" << d1 << ", " << d2 << ") = " << Min(d1, d2) << endl;
-    double d3 = 9.999, d4 = 0.001;
-    cout << "double: Min(" << d3 << ", " << d4 << ") = " << Min(d3, d4) << endl;
+    int diceResult = (rand() % 6) + 1;
 
-   
-    char c1 = 'A', c2 = 'B';
-    cout << "char: Min(" << c1 << ", " << c2 << ") = ";
-    Min(c1, c2);
-    char c3 = 'Z', c4 = 'M';
-    cout << "char: Min(" << c3 << ", " << c4 << ") = ";
-    Min(c3, c4);
+  
+    int userInput;
+    std::cout << "半(奇数)なら 1、丁(偶数)なら 2 を入力してください: ";
+    std::cin >> userInput;
+
+    if (userInput != 1 && userInput != 2) {
+        std::cout << "無効な入力です。1か2を入力してください。" << std::endl;
+        return 1;
+    }
+
+    std::cout << "判定中..." << std::endl;
+
+    
+    auto judgeResult = [userInput, diceResult]() {
+        std::cout << "\nサイコロの目: " << diceResult << std::endl;
+
+        bool isOdd = (diceResult % 2 != 0); 
+
+        if (isOdd) {
+            std::cout << "結果: 半（奇数）" << std::endl;
+        }
+        else {
+            std::cout << "結果: 丁（偶数）" << std::endl;
+        }
+
+      
+        bool userGuessedOdd = (userInput == 1);
+
+        if (userGuessedOdd == isOdd) {
+            std::cout << "あたり" << std::endl;
+        }
+        else {
+            std::cout << "はずれ" << std::endl;
+        }
+        };
+
+    setTimeout(3, judgeResult);
 
     return 0;
 }
