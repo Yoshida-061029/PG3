@@ -1,37 +1,55 @@
-#include<stdio.h>
-#include<Windows.h>
+#include <iostream>
+#include <string>
 
-int RecursiveWage(int a) {
-    if (a == 1) {
-        return 100;
+
+class Enemy {
+public:
+   
+    using StateFunc = void (Enemy::*)();
+
+    Enemy() : stateName_("接近"), stateFunc_(&Enemy::StateApproach) {}
+
+ 
+    void Update() {
+        (this->*stateFunc_)();
     }
-    return RecursiveWage(a - 1) * 2 - 50;
-}
+
+private:
+    std::string stateName_;
+    StateFunc   stateFunc_;
+
+ 
+    void StateApproach() {
+        std::cout << "[敵の状態] " << stateName_ << " : 敵がプレイヤーに近づいている..." << std::endl;
+   
+        stateName_ = "射撃";
+        stateFunc_ = &Enemy::StateShoot;
+    }
+
+  
+    void StateShoot() {
+        std::cout << "[敵の状態] " << stateName_ << " : 敵が射撃している！" << std::endl;
+     
+        stateName_ = "離脱";
+        stateFunc_ = &Enemy::StateRetreat;
+    }
+
+    
+    void StateRetreat() {
+        std::cout << "[敵の状態] " << stateName_ << " : 敵が離脱している..." << std::endl;
+      
+        stateName_ = "接近";
+        stateFunc_ = &Enemy::StateApproach;
+    }
+};
 
 int main() {
-    SetConsoleOutputCP(65001);
+    Enemy enemy;
 
-    int baseWage = 1072;
+    std::cout << "=== 敵の状態遷移デモ ===" << std::endl;
 
-    printf(" 時間  | 一般賃金 | 再帰賃金\n");
-    printf(" ----- |----------|----------\n");
-
-    for (int h = 1; h <= 10; h++) {
-        int normalWage = baseWage * h;
-        int recursiveWage = RecursiveWage(h);
-        printf("%3d時間 |%6d円 |%6d円\n", h, normalWage, recursiveWage);
-    }
-
-    int lastNormalWage = baseWage * 10;
-    int lastRecursiveWage = RecursiveWage(10);
-    if (lastNormalWage > lastRecursiveWage) {
-        printf("一般賃金の方が高い\n");
-    }
-    else if (lastRecursiveWage > lastNormalWage) {
-        printf("再帰賃金の方が高い\n");
-    }
-    else {
-        printf("同じ\n");
+    for (int i = 0; i < 9; i++) {
+        enemy.Update();
     }
 
     return 0;
