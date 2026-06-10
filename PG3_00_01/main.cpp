@@ -1,57 +1,35 @@
 #include <iostream>
-#include <string>
 #include <windows.h>
 
-class Enemy {
+template <typename T1, typename T2>
+class Comparer {
 public:
-   
-    using StateFunc = void (Enemy::*)();
-
-    Enemy() : stateName_("接近"), stateFunc_(&Enemy::StateApproach) {}
-
- 
-    void Update() {
-        (this->*stateFunc_)();
-    }
-
-private:
-    std::string stateName_;
-    StateFunc   stateFunc_;
-
- 
-    void StateApproach() {
-        std::cout << "[敵の状態] " << stateName_ << " : 敵がプレイヤーに近づいている..." << std::endl;
-   
-        stateName_ = "射撃";
-        stateFunc_ = &Enemy::StateShoot;
-    }
-
-  
-    void StateShoot() {
-        std::cout << "[敵の状態] " << stateName_ << " : 敵が射撃している！" << std::endl;
-     
-        stateName_ = "離脱";
-        stateFunc_ = &Enemy::StateRetreat;
-    }
-
     
-    void StateRetreat() {
-        std::cout << "[敵の状態] " << stateName_ << " : 敵が離脱している..." << std::endl;
-      
-        stateName_ = "接近";
-        stateFunc_ = &Enemy::StateApproach;
+    T1 Min(T1 a, T2 b) {
+        return (a < static_cast<T1>(b)) ? a : static_cast<T1>(b);
     }
 };
 
 int main() {
     SetConsoleOutputCP(65001);
-    Enemy enemy;
 
-    std::cout << "=== 敵の状態遷移 ===" << std::endl;
+    Comparer<int, int> c1;
+    std::cout << "[int,    int   ] Min(3, 5)       = " << c1.Min(3, 5) << std::endl;
 
-    for (int i = 0; i < 9; i++) {
-        enemy.Update();
-    }
+    Comparer<float, float> c2;
+    std::cout << "[float,  float ] Min(1.5f, 2.5f) = " << c2.Min(1.5f, 2.5f) << std::endl;
+
+    Comparer<double, double> c3;
+    std::cout << "[double, double] Min(3.14, 2.71) = " << c3.Min(3.14, 2.71) << std::endl;
+
+    Comparer<int, float> c4;
+    std::cout << "[int,    float ] Min(4, 3.7f)    = " << c4.Min(4, 3.7f) << std::endl;
+
+    Comparer<int, double> c5;
+    std::cout << "[int,    double] Min(7, 6.99)    = " << c5.Min(7, 6.99) << std::endl;
+
+    Comparer<float, double> c6;
+    std::cout << "[float,  double] Min(1.1f, 1.05) = " << c6.Min(1.1f, 1.05) << std::endl;
 
     return 0;
 }
