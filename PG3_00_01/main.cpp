@@ -1,11 +1,16 @@
 #include<stdio.h>
 #include<Windows.h>
 
+int Power2(int n) {
+    if (n == 0) return 1;
+    return Power2(n - 1) * 2;
+}
+
 int RecursiveWage(int a) {
     if (a == 1) {
         return 100;
     }
-    return RecursiveWage(a - 1) * 2 - 50;
+    return RecursiveWage(a - 1) + 50 * Power2(a - 2);
 }
 
 int main() {
