@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include <windows.h>
 
 class Enemy {
 public:
@@ -44,9 +44,10 @@ private:
 };
 
 int main() {
+    SetConsoleOutputCP(65001);
     Enemy enemy;
 
-    std::cout << "=== 敵の状態遷移デモ ===" << std::endl;
+    std::cout << "=== 敵の状態遷移 ===" << std::endl;
 
     for (int i = 0; i < 9; i++) {
         enemy.Update();
