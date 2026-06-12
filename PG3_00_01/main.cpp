@@ -1,52 +1,65 @@
 #include <iostream>
+#include <cmath>
 #include <windows.h>
 
-class Animal {
-protected:
-    std::string name;
+#define M_PI 3.14159265358979323846
 
+// 抽象クラス
+class IShape {
 public:
-    Animal(const std::string& name) : name(name) {}
-
-    virtual void Speak() {
-        std::cout << name << "は鳴きます。" << std::endl;
-    }
-
-    virtual ~Animal() {}
+    virtual double Size() const = 0;
+    virtual void Draw() const = 0;
+    virtual ~IShape() {}
 };
 
-class Dog : public Animal {
-public:
-    Dog(const std::string& name) : Animal(name) {}
+// 円クラス
+class Circle : public IShape {
+private:
+    double radius;
 
-    void Speak() override {
-        std::cout << name << "は「ワン!」と吠えます。" << std::endl;
+public:
+    Circle(double radius) : radius(radius) {}
+
+    double Size() const override {
+        return M_PI * radius * radius;
+    }
+
+    void Draw() const override {
+        std::cout << "円の面積: " << Size() << std::endl;
     }
 };
 
-class Cat : public Animal {
-public:
-    Cat(const std::string& name) : Animal(name) {}
+// 矩形クラス
+class Rect : public IShape {
+private:
+    double width;
+    double height;
 
-    void Speak() override {
-        std::cout << name << "は「ニャー」と鳴きます。" << std::endl;
+public:
+    Rect(double width, double height) : width(width), height(height) {}
+
+    double Size() const override {
+        return width * height;
+    }
+
+    void Draw() const override {
+        std::cout << "矩形の面積: " << Size() << std::endl;
     }
 };
 
 int main() {
     SetConsoleOutputCP(65001);
 
-    Animal* animals[3];
-    animals[0] = new Dog("ポチ");
-    animals[1] = new Cat("ミケ");
-    animals[2] = new Animal("名無し");
+    IShape* shapes[2];
+    shapes[0] = new Circle(5.0);
+    shapes[1] = new Rect(4.0, 6.0);
 
-    for (int i = 0; i < 3; i++) {
-        animals[i]->Speak();
+    for (int i = 0; i < 2; i++) {
+        shapes[i]->Draw();
     }
 
-    for (int i = 0; i < 3; i++) {
-        delete animals[i];
+    for (int i = 0; i < 2; i++) {
+        delete shapes[i];
     }
 
     return 0;
