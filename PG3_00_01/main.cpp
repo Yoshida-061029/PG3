@@ -1,52 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+#include <list>
 #include <iostream>
-#include <windows.h>
 
-class Animal {
-protected:
-    std::string name;
+using namespace std;
 
-public:
-    Animal(const std::string& name) : name(name) {}
+int main(void) {
 
-    virtual void Speak() {
-        std::cout << name << "は鳴きます。" << std::endl;
+    list<const char*> eki_list{
+        "Tokyo", "Kanda", "Akihabara", "Okachimachi", "Ueno", "Uguisudani",
+        "Nippori", "Tabata", "Komagome", "Sugamo", "Otsuka", "Ikebukuro", "Mejiro",
+        "Takadanobaba", "Sin-Okubo", "Shinjuku", "Yoyogi", "Harajuku", "Shibuya",
+        "Ebisu", "Meguro", "Gotanda", "Osaki", "Sinagawa", "Tamachi", "Hamamatsucho",
+        "Shimbashi", "Yurakucho"
+    };
+
+  
+    printf("1970年\n");
+    for (list<const char*>::iterator it_f = eki_list.begin(); it_f != eki_list.end(); ++it_f) {
+        std::cout << *it_f << endl;
     }
 
-    virtual ~Animal() {}
-};
+    
+    printf("\n2019年\n");
+    for (list<const char*>::iterator it_f = eki_list.begin(); it_f != eki_list.end(); ++it_f) {
 
-class Dog : public Animal {
-public:
-    Dog(const std::string& name) : Animal(name) {}
-
-    void Speak() override {
-        std::cout << name << "は「ワン!」と吠えます。" << std::endl;
-    }
-};
-
-class Cat : public Animal {
-public:
-    Cat(const std::string& name) : Animal(name) {}
-
-    void Speak() override {
-        std::cout << name << "は「ニャー」と鳴きます。" << std::endl;
-    }
-};
-
-int main() {
-    SetConsoleOutputCP(65001);
-
-    Animal* animals[3];
-    animals[0] = new Dog("ポチ");
-    animals[1] = new Cat("ミケ");
-    animals[2] = new Animal("名無し");
-
-    for (int i = 0; i < 3; i++) {
-        animals[i]->Speak();
+      
+        if (strcmp(*it_f, "Tabata") == 0) {
+            it_f = eki_list.insert(it_f, "Nishi-Nippori");
+            std::cout << *it_f << endl;
+            ++it_f;
+        }
+        std::cout << *it_f << endl;
     }
 
-    for (int i = 0; i < 3; i++) {
-        delete animals[i];
+    
+    printf("\n2022年\n");
+    for (list<const char*>::iterator it_f = eki_list.begin(); it_f != eki_list.end(); ++it_f) {
+
+        if (strcmp(*it_f, "Tamachi") == 0) {
+            it_f = eki_list.insert(it_f, "Takanawa Gateway");
+            std::cout << *it_f << endl;
+            ++it_f;
+        }
+        std::cout << *it_f << endl;
     }
 
     return 0;
