@@ -31,11 +31,12 @@ int main(void) {
 
     printf("\n2022年\n");
     for (list<const char*>::iterator it_f = eki_list.begin(); it_f != eki_list.end(); ++it_f) {
+        std::cout << *it_f << endl;
         if (strcmp(*it_f, "Tamachi") == 0) {
-            eki_list.insert(it_f, "Takanawa Gateway");
+            auto next_it = std::next(it_f);
+            eki_list.insert(next_it, "Takanawa Gateway");
             std::cout << "Takanawa Gateway" << endl;
         }
-        std::cout << *it_f << endl;
     }
 
     return 0;
