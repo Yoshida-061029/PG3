@@ -15,33 +15,25 @@ int main(void) {
         "Shimbashi", "Yurakucho"
     };
 
-  
     printf("1970年\n");
     for (list<const char*>::iterator it_f = eki_list.begin(); it_f != eki_list.end(); ++it_f) {
         std::cout << *it_f << endl;
     }
 
-    
     printf("\n2019年\n");
     for (list<const char*>::iterator it_f = eki_list.begin(); it_f != eki_list.end(); ++it_f) {
-
-      
         if (strcmp(*it_f, "Tabata") == 0) {
-            it_f = eki_list.insert(it_f, "Nishi-Nippori");
-            std::cout << *it_f << endl;
-            ++it_f;
+            eki_list.insert(it_f, "Nishi-Nippori");
+            std::cout << "Nishi-Nippori" << endl;
         }
         std::cout << *it_f << endl;
     }
 
-    
     printf("\n2022年\n");
     for (list<const char*>::iterator it_f = eki_list.begin(); it_f != eki_list.end(); ++it_f) {
-
         if (strcmp(*it_f, "Tamachi") == 0) {
-            it_f = eki_list.insert(it_f, "Takanawa Gateway");
-            std::cout << *it_f << endl;
-            ++it_f;
+            eki_list.insert(it_f, "Takanawa Gateway");
+            std::cout << "Takanawa Gateway" << endl;
         }
         std::cout << *it_f << endl;
     }
