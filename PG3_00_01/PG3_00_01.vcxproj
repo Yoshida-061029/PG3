@@ -127,9 +127,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Chaseenemy.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <ClCompile Include="Movepattern.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Randomspawn.cpp" />
+    <ClCompile Include="Spawnpattern.cpp" />
+    <ClCompile Include="Starigthenemy.cpp" />
+    <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="Ziguzagenemy.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Chaseenemy.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Movepattern.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Randomspawn.h" />
+    <ClInclude Include="Spawnpattern.h" />
+    <ClInclude Include="Starigthenemy.h" />
+    <ClInclude Include="Vector2.h" />
+    <ClInclude Include="Ziguzagenemy.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
