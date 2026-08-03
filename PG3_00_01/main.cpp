@@ -4,7 +4,7 @@
 
 int main() {
 
-	std::string a(1000000, 'a');  // 100,000 → 1,000,000 に修正
+	std::string a(1000000, 'a');
 
 
 	auto start_copy = std::chrono::high_resolution_clock::now();
